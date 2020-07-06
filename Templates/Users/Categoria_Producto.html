@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de productos</title>
+</head>
+<body>
+    {%product in Categoria_Producto%}
+        {% for item in product %}
+            <p>{{item}}</p>
+        {%endfor%}
+    {%endfor%}
+
+
+</body>
+</html>

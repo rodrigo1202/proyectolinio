@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Datos de envio</title>
+</head>
+<body>
+    <form method="get" action="/luegopago">
+            <label>Numero de tajeta</label><br>
+            <input type="text" name="Numero de tajeta" placeholder="Numero de tajeta" required=""><br>
+            <label>Direccion de facturacion</label><br>
+            <input type="text" name="Direccion de facturacion" placeholder="Direccion de facturacion" required=""><br>
+            <label>Nombre de la tarjeta</label><br>
+            <input type="text" name="Nombre de la tarjeta" placeholder="Nombre de la tarjeta" required=""><br>
+            <label>Código CVV</label><br>
+            <input type="text" name="Código CVV" placeholder="Código CVV" required=""><br>
+            <label>Fecha de Vencimiento</label><br>
+            <input type="text" name="Fecha de Vencimiento" placeholder="Fecha de Vencimiento" required=""><br>
+            <input type="submit" name="enviar" value="Enviar" href="{{ url_for('home') }}" onClick ="mensaje('Gracias por comprar con nosotros')">
+        <script>
+                function mensaje(texto) {
+                    alert(texto);
+                }
+            </script>
+    </form>
+</body>
+</html>

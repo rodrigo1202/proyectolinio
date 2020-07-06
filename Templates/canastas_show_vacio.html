@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
+    <!--<link rel="shortcut icon" type="image/png" href="#" />
+    <link rel="apple-touch-icon" sizes="128x128" href="#">
+    <link rel="icon" sizes="192x192" href="#">-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}" />
+    <title>Linio - Compra por internet</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-light shadow">
+        <!-- Dropdown menu-->
+        <a href="#" data-toggle="modal" data-target="#menu">
+            <i class="fas fa-bars fa-secondary fa-2x"></i>
+        </a>
+
+        <!-- Enlace para ir a inicio -->
+        <a href="{{ url_for('home') }}">
+
+            <!-- Logo de Linio -->
+            <img class="mt-1 scale"
+                src="https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/Linio_logo_refresh.svg/1200px-Linio_logo_refresh.svg.png"
+                style="height:47px;">
+        </a>
+
+        <!-- Solo se mostrara este div en pantallas grandes -->
+        <div class="d-none d-md-block mt-2 mb-2">
+            <!-- Formulario de búsqueda -->
+            <form class="form-inline">
+                <div class="input-group input-group-lg">
+                    <div class="input-group-prepend">
+                        <!-- Selector de categorías -->
+                        <select class="custom-select" id="inputGroupSelect"
+                            style="border-radius: 50px 0px 0px 50px; border-width: 2px 1px 2px 2px; height:48px; border-color: #707070;">
+                            <option selected>Todos</option>
+                            <option value="1">Arte y artesanías</option>
+                            <option value="2">Belleza y cuidado personal</option>
+                            <option value="3">Computadoras</option>
+                            <option value="4">Belleza y cuidado personal</option>
+                            <option value="5">Electrodomésticos</option>
+                        </select>
+                    </div>
+                    <input class="form-control" type="search" placeholder="BUSCA LO QUE NECESITES" aria-label="Search"
+                        style="border-radius: 0px 0px 0px 0px; border-width: 2px 0px 2px 1px; min-width: 300px;">
+                    <div class=" input-group-append">
+                        <button type="button" name="button"
+                            style="border-radius: 0px 50px 50px 0px; border-width: 2px 2px 2px 0px; border-color: #707070; background-color: white;">
+                            <i class="fas fa-primary fa-search mr-2" style="font-size: 24px;"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Enlace a página de carrito -->
+        <a href="{{ url_for('canasta') }}">
+            <i class="fas fa-secondary fa-shopping-cart fa-2x"></i>
+        </a>
+
+    </nav>
+
+    <!-- Descripción del producto-->
+    <section class="container mx-auto px-4" style="max-width:1080px;">
+        <div class="mt-4">
+            <h3 style="font-weight: 700;">Entra a tu cuenta para ver tu carrito o regístrate gratis.</h3>
+        </div>
+
+        <a class="no-underline d-inline-flex mx-1 my-2" href="{{ url_for('login') }}">
+            <button class="btn btn-lg btn-outline-primary btn-block mx-auto" style="min-width: 200px;">
+                <strong>Iniciar sesión</strong>
+            </button>
+        </a>
+        <a class="no-underline d-inline-flex mx-1 my-2" href="{{ url_for('registration') }}">
+            <button class="btn btn-lg btn-outline-secondary btn-block mx-auto" style="min-width: 200px;">
+                <strong>Regístrate</strong>
+            </button>
+        </a>
+
+        <div class="row w-100 text-center mx-auto mt-3" style="background-color: #242424;">
+            <div class="col-md-7 col-sm-6 col-12 text-center my-auto">
+                <h4 class="text-light mt-4" style="font-weight: 500;">Novedades</h4>
+                <h5 class="text-light mt-3" style="font-weight: 500;">Echa un vistazo a nuestros últimos productos</h5>
+                <a class="no-underline mx-1 my-2" href="login.html">
+                    <button class="btn btn-primary btn-block mx-auto w-25" style="min-width: 200px;">
+                        <strong>Nuevos productos</strong>
+                    </button>
+                </a>
+            </div>
+            <div class="col-md-5 col-sm-6 col-12 text-center">
+                <img class="w-75 mb-0 mt-3"
+                    src="https://linio-express.s3-sa-east-1.amazonaws.com/ilustraciones/carrito_de_compras.svg" alt="">
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-white mt-4" style="background-color:#2E3133;">
+        <div class="container mx-auto">
+            <div class="row px-2 pt-5 pb-3">
+                <div class="col-md-5 px-3">
+                    <h5>Acerca de Linio</h5>
+                    <a style="color: #B3B3B3;" target="_blank"
+                        href="https://www.linio.com.pe/sp/acercadenosotros">Historia</a><br>
+                    <a style="color: #B3B3B3;" target="_blank"
+                        href="https://www.linio.com.pe/sp/terminos-y-condiciones">Términos y condiciones</a><br>
+                    <a style="color: #B3B3B3;" target="_blank" href="https://www.linio.com.pe/sp/privacidad">Política de
+                        privacidad</a><br>
+                    <p class="mt-3">Copyright © 2020 Linio. Todos los derechos reservados. </p>
+                </div>
+                <div class="col-md-4 px-3">
+                    <h5>Servicio al cliente</h5>
+                    <a style="color: #B3B3B3;" target="_blank"
+                        href="https://www.linio.com.pe/sp/preguntas-frecuentes">Preguntas frecuentes</a><br>
+                    <a style="color: #B3B3B3;" target="_blank"
+                        href="https://www.linio.com.pe/sp/preguntas-frecuentes/formas-de-pago-y-precio#s1">Formas de
+                        pago</a><br>
+                    <a style="color: #B3B3B3;" target="_blank"
+                        href="https://www.linio.com.pe/sp/preguntas-frecuentes">Contacto</a><br>
+                    <a style="color: #B3B3B3;" target="_blank"
+                        href="https://www.linio.com.pe/sp/politica-devoluciones">Política de garantía y devoluciones</a>
+                </div>
+                <div class="col-md-3 px-3">
+                    <h5>Síguenos:</h5>
+                    <a style="color: #8b8b8b;" href="https://www.facebook.com/LinioPeru/" target="_blank"><i
+                            class="fab fa-facebook fa-2x m-2"></i></a>
+                    <a style="color: #8b8b8b;" href="https://twitter.com/LinioPeru/" target="_blank"><i
+                            class="fab fa-twitter fa-2x m-2"></i></a>
+                    <a style="color: #8b8b8b;" href="https://www.youtube.com/channel/UCeILO0qSGn4HdEf3AZK08-A"
+                        target="_blank"><i class="fab fa-youtube fa-2x m-2"></i></a>
+                </div>
+            </div>
+        </div>
+        <div style="background-color: black;" class="row w-100 text-light mx-0 px-0">
+            <div class="container text-center">
+                <p class="text-center mt-3 mb-3">HECHO POR EL MEJOR GRUPO DE SOLU</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+        integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+
+</body>

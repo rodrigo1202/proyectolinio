@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Linio - Compra por internet</title>
+</head>
+<body>
+    <h1> {{ product.nombre }} </h1>
+    <p>{{ product.descripcion }}</p>
+
+</body>
+<br>
+<br>
+<br>
+
+<form action="/carrito" method="POST">
+
+    <div class="form-group mt-3">
+        <select name="cantidad" class="form-control" id="exampleFormControlSelect1">
+            <option value="1">Cantidad: 1</option>
+            <option value="2">Cantidad: 2</option>
+            <option value="3">Cantidad: 3</option>
+            <option value="4">Cantidad: 4</option>
+            <option value="5">Cantidad: 5</option>
+        </select>
+        <input type="text" name="codigo_prod" value="{{product.codigo}}" hidden><br>
+    </div>
+
+<button class="btn btn-primary w-75 mx-auto"
+    style="max-width: 225px; min-width: 125px;" href="#">
+    <strong>Agregar a carrito</strong>
+</button>
+</form>
+
+</html>

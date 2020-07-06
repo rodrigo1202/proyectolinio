@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <!--<link rel="shortcut icon" type="image/png" href="#" />
+    <link rel="apple-touch-icon" sizes="128x128" href="#">
+    <link rel="icon" sizes="192x192" href="#">-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}" />
+    <title>Linio - Compra por internet</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-light shadow" >
+
+        <!-- Dropdown menu-->
+        <a href="#" data-toggle="modal" data-target="#menu">
+            <i class="fas fa-bars fa-secondary fa-2x"></i>
+        </a>
+
+        <!-- Enlace para ir a inicio -->
+        <a href="{{ url_for('home') }}">
+
+            <!-- Logo de Linio -->
+            <img class="mt-1 scale"
+                src="https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/Linio_logo_refresh.svg/1200px-Linio_logo_refresh.svg.png"
+                style="height:47px;">
+        </a>
+
+        <div class="d-none d-md-block mt-2 mb-2">
+            <!-- Formulario de búsqueda -->
+            <form  class="form-inline" name="search" onsubmit="return handleSubmit();">
+                <div class="input-group input-group-lg">
+
+                    <input class="form-control" id="search" type="search" placeholder="BUSCA LO QUE NECESITAS" aria-label="Search"
+                        style="border-radius: 50px 0px 0px 50px; border-width: 2px 0px 2px 1px; min-width: 300px;">
+                    <div class=" input-group-append">
+                        <button type="button" name="button"
+                            style="border-radius: 0px 50px 50px 0px; border-width: 2px 2px 2px 0px; border-color: #707070; background-color: white;">
+                            <i class="fas fa-primary fa-search mr-2" style="font-size: 24px;"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Enlace a página de usuario -->
+        {% if session['user_name'] == none  %}
+                            <a href="{{ url_for('login') }}">
+            <i class="fas fa-secondary fa-user fa-2x"></i>
+        </a>
+                        {% endif %}
+        {% if session['user_name'] != none  %}                   
+        <span>Bienvenido {{session['user_name']}}</span>
+        {% endif %}                
+       
+
+        <!-- Enlace a página de canasta -->
+        <a href="{{ url_for('carrito') }}">
+            <i class="fas fa-secondary fa-shopping-cart fa-2x"></i>
+        </a>
+        {% if session['user_name'] != none  %}
+                            <a href="{{url_for('logout')}}">salir</a>
+                        {% endif %}
+    </nav>
+
+    <!-- Menu -->
+    <div class="modal fade" id="menu" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="height:100%; margin:0; padding: 0;">
+            <div class="modal-content w-75 ml-0" style="height:100%; margin:0; padding: 0;">
+                <div class="">
+                    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>-->
+                    <div class="text-center bg-gradient-primary text-white container">
+                        <img class="w-50 mt-3 mb-3"
+                            src="https://upload.wikimedia.org/wikipedia/en/thumb/a/aa/Linio_logo_refresh.svg/1200px-Linio_logo_refresh.svg.png"
+                            alt="">
+                    </div>
+                    <ul class="list-group list-group-flush flex-column px-2">
+                        <li class="list-group-item list-group-item-lg list-group-item-action">
+                            <a href="#" class="secondary">
+                                <i class="fas fa-home pl-2 pr-3"></i>Inicio
+                            </a>
+                        </li>
+                        <li class="list-group-item list-group-item-lg list-group-item-action">
+                            <a href="#" class="secondary dropdown-toggle" role="button" id="dropdownMenuLink"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-th pl-2 pr-3"></i>Categorías
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="{{ url_for('mascotas') }}">Mascotas</a>
+                                <a class="dropdown-item" href="{{ url_for('supermercado') }}">Supermercado</a>
+                                <a class="dropdown-item" href="{{ url_for('deportes') }}">Deportes</a>
+                                <a class="dropdown-item" href="{{ url_for('tecnologia') }}">Tecnología</a>
+                                <a class="dropdown-item" href="{{ url_for('electrohogar') }}">Electrohogar</a>
+                            </div>
+
+                        </li>
+                        <li
+                            class="list-group-item list-group-item-lg list-group-item-action d-flex justify-content-between align-items-center">
+                            <a href="{{ url_for('historialpedidos') }}" class="secondary">
+                                <i class="fas fa-truck pl-2 pr-3"></i>Mis pedidos
+                            </a>
+                            <span class="badge badge-primary badge-pill">1</span>
+                        </li>
+                        <li class="list-group-item list-group-item-lg list-group-item-action">
+                            <a href="#" class="secondary">
+                                <i class="fas fa-cog pl-2 pr-3"></i>Ajustes de cuenta
+                            </a>
+                        </li>
+                    </ul>
+                     {% if session['user_name'] == none  %}
+                           <div class="container text-center">
+                        <a class="no-underline" href="{{ url_for('login') }}">
+                            <button class="btn btn-lg btn-outline-primary mt-4 mb-4 btn-block w-75 mx-auto">
+                                <strong>Iniciar sesión</strong>
+                            </button>
+                        </a>
+                        <a class="no-underline" href="{{ url_for('registration') }}">
+                            <button class="btn btn-lg btn-outline-secondary mt-4 mb-4 btn-block w-75 mx-auto">
+                                <strong>Regístrate</strong>
+                            </button>
+                        </a>
+                        {% endif %}
+                    
+
+
+                        {% if session['user_name'] != none  %}
+                            <a href="{{url_for('logout')}}">salir</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página de inicio -->
+    <section class="container mx-auto px-4" style="max-width:1100px;">
+        <div class="row w-100 text-center mx-auto mt-5" style="background-color: #F2F2F2; border-radius: 40px;">
+            <div class="col-md-6 col-sm-6 col-12 text-center my-auto px-5">
+                <h2 class="text-dark mt-4" style="font-weight: 700;">Hola, {% if session['user_name'] != none  %}
+                            {{session['user_name']}}
+                        {% endif %} ¡De nuevo aquí! ¿Qué se te antoja comprar hoy?</h2>
+                <h3 class="text-dark mt-2 mb-4" style="font-weight: 600;">Tenemos los mejores productos en todas las
+                    categorías para ti.</h3>
+            </div>
+            <div class="col-md-6 col-sm-6 col-12 text-left">
+                <img class="w-100 mb-0 mt-0"
+                    src="https://linio-express.s3-sa-east-1.amazonaws.com/ilustraciones/undraw_add_to_cart_vkjp.svg"
+                    alt="">
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col">
+                <h3 style="font-weight: 700;">Categorías</h3>
+            </div>
+        </div>
+
+        <div class="text-center d-4 mx-5 px-4 mt-3 align-middle" 
+            style="overflow-x: auto; overflow-y: hidden; max-width:1100px; -webkit-overflow-scrolling: touch;">
+            <a href="/categoria?categoria=mascotas">
+                <div class="d-inline-block align-top category text-center p-1 align-middle" style="background-color: #F2F2F2;">
+                    <div class="d-flex align-items-center align-middle" style="height:100px;">
+                        <img class="w-50 mx-auto py-auto scale align-middle"
+                            src="https://static.vecteezy.com/system/resources/previews/000/650/958/original/creative-minimal-panda-illustration-vector-png-art.jpg" alt="">
+                    </div>
+                    <div style="min-height: 100px;">
+                        <h5 class="text-dark" style="font-weight: 500;">Mascotas</h5>
+                    </div>
+                </div>
+            </a>
+            <a href="/categoria?categoria=supermercado">
+                <div class="d-inline-block ml-3 align-top category text-center p-1" style="background-color: #F2F2F2;">
+                    <div class="d-flex align-items-center" style="height:100px;">
+                        <img class="w-50 mx-auto scale"
+                            src="https://img2.freepng.es/20190723/uxy/kisspng-grocery-store-delicatessen-supermarket-vector-grap-fast-moving-consumer-goods-terragon-5d37d4dcd68966.2487245015639400608788.jpg" alt="">
+                    </div>
+                    <div style="min-height: 100px;">
+                        <h5 class="text-dark" style="font-weight: 500;">Supermercado</h5>
+                    </div>
+                </div>
+            </a>
+            <a href="/categoria?categoria=deportes">
+                <div class="d-inline-block ml-3 align-top category text-center p-1" style="background-color: #F2F2F2;">
+                    <div class="d-flex align-items-center" style="height:100px;">
+                        <img class="w-50 mx-auto scale"
+                            src="https://w7.pngwing.com/pngs/281/62/png-transparent-basketball-jump-shot-backboard-taekwondo-sport-team-sports.png" alt="">
+                    </div>
+                    <div style="min-height: 100px;">
+                        <h5 class="text-dark text-center" style="font-weight: 500;">Deportes</h5>
+                    </div>
+                </div>
+            </a>
+            <a href="/categoria?categoria=tecnologia">
+                <div class="d-inline-block ml-3 align-top category text-center p-1" style="background-color: #F2F2F2;">
+                    <div class="d-flex align-items-center" style="height:100px;">
+                        <img class="w-50 mx-auto scale"
+                            src="https://w7.pngwing.com/pngs/375/919/png-transparent-computer-icons-innovation-innovative-miscellaneous-text-technology.png" alt="">
+                    </div>
+                    <div style="min-height: 100px;">
+                        <h5 class="text-dark" style="font-weight: 500;">Tecnologia
+                        </h5>
+                    </div>
+                </div>
+            </a>
+            <a href="/categoria?categoria=electrohogar">
+                <div class="d-inline-block ml-3 align-top category text-center p-1" style="background-color: #F2F2F2;">
+                    <div class="d-flex align-items-center" style="height:100px;">
+                        <img class="w-50 mx-auto scale"
+                            src="https://image.flaticon.com/icons/png/512/998/998779.png" alt="">
+                    </div>
+                    <div style="min-height: 100px;">
+                        <h5 class="text-dark" style="font-weight: 500;">Electrohogar</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col">
+                <h3 style="font-weight: 700;">Últimos productos</h3>
+            </div>
+            <div class="col text-right">
+                <a href="{{ url_for('products') }}" class="text-primary">
+                    <h4 class="pt-1 px-2">Ver todos los productos</h4>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+        integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+<script>
+
+    function handleSubmit(){
+    console.log("render javascript")
+    let search= document.getElementById("search").value
+    console.log(search)
+    window.location = '/productos?name='+search;
+    return false;
+    }
+</script>
+
+</body>
