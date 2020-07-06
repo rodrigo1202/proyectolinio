@@ -6,6 +6,8 @@ from models.Pedido import Pedido
 from models.Carrito import Carrito
 ##Es para registrarse, iniciar sesión y cerrar sesión
 app = Flask(__name__)
+app.config['SESSION_TYPE'] = 'memcached'
+app.secret_key  = 'clave_super_ultra_secreta'
 
 @app.route('/')
 def home():
@@ -172,6 +174,4 @@ def pago(id_pedido):
 
 if __name__ == "__main__": 
     ##es para que la aplicación corra en el servidor que creamos
-    app.secret_key = "clave_super_ultra_secreta"
-
     app.run(debug=True)

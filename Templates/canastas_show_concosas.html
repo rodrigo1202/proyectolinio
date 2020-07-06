@@ -198,7 +198,7 @@
                         <h4 class="d-sm-block d-none" style="font-weight: 600;">Total</h4>
                     </div>
                     <div class="col-md-4 col-5">
-                        <h4 class="d-sm-block d-none" style="font-weight: 600;" id="total">S/ 1 105.00</h4>
+                        <h4 class="d-sm-block d-none" style="font-weight: 600;" id="total"><p id="currentTotal">S/1105</p></h4>
                     </div>
                 </div>
                 <a href="{{ url_for('datosenvio') }}">
@@ -253,15 +253,19 @@
         crossorigin="anonymous"></script>
 <script>
 
-    function eliminarCarrito() {
-    var element=document.getElementById('borrar');
-    var newTotal=1105-499
-    element.parentNode.removeChild(element);
-    var total = document.getElementById('total');
-    var newNode = document.createElement('p');
-    newNode.appendChild(document.createTextNode(newTotal));
-    p.appendChild(newNode);
-    return false
+    function eliminarCarrito() {   
+        var element=document.getElementById('borrar');
+        var current=document.getElementById('currentTotal');
+        var newTotal='S/ 606'
+        var total = document.getElementById('total');
+        var newNode = document.createElement('p');
+        
+        
+        element.parentNode.removeChild(element);
+        current.parentNode.removeChild(current);
+        newNode.appendChild(document.createTextNode(newTotal));
+        total.appendChild(newNode);
+        return false
     }
 
 
