@@ -74,33 +74,33 @@ def canasta():
 
 @app.route('/carrito', methods=["get", "post"])
 def carrito():
-    email=session['user_email']
-    carrito1=Carrito(1,'',0,email)
-    ## Como deberia ser
-    # 1. Verificar si el usuario tiene un pedido
-    # 2. Si no tiene: crear un pedido para el usuario
-    # 3. Crear linea de pedido(cod_prod, cod_pedido, cantidad)
-    
-    ## Si no tienen tiempo
-    # Metanle defrente el precio de venta, para calcular el subtotal de la linea de pedido
-    # Para el calcular el total del pedido, sumar los subtotales de las lineas de pedido de ese pedido
-    # Codigo producto (finta)
-    carrito_generado=carrito1.generarcarrito()
-    if carrito_generado==False:
-        print("No se genero carrito")
+    #Iniciamos las varibles
+    email = session['user_email']
+    product_id = request.args.get('product_id')
+    carrito = Carrito(0,'',0.0,email)
+    #Generamos carrito
+    carritoGenerado = carrito.generarcarrito()
+    #Creación del carrito en la db
+    if carritoGenerado == False:
+        print("no se genero carrito")
+        return 'no se genero carrito'
+    #obtener del carrito
+    carritoActual = carrito.obtener_carrito(email)
+    #Evaluamos si existen más productos dentro del carrito del usuario
+    productsInCar=carritoActual.prod_nom
+    print(carritoActual.prod_nom)
+    if len(productsInCar)>0:
+       carritoActual.prod_nom = carritoActual.prod_nom+','+product_id
+    else:
+        carritoActual.prod_nom=product_id
+     #Actualizamos el producto
+    actualizado=carritoActual.actualizar_carrito()
+    #Validamos la acatualización
+    if actualizado == False:
+        print("no se actualizo")
+        return 'no se actualizo'
 
-
-    if request.args.get('product_id')!=None:
-        carrito_obtenido=carrito1.obtener_carrito(email)
-        productos=carrito_obtenido.prod_nom()
-        id_producto = request.args.get('product_id')
-        if len(productos)<0:
-            carrito_obtenido.prod_nom(id_producto)
-        new_products=productos+','+id_producto
-
-
-
-    return render_template('canastas_show_concosas.html', request=request)
+    return render_template('canastas_show_concosas.html',carrito=carritoActual)
 
 @app.route('/Skullcandydetalle', methods=["get", "post"])
 def detalleSkull():

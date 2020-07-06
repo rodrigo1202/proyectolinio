@@ -46,9 +46,9 @@ class Carrito():
         try:
             cursor = database.cursor()  # OBTENER OBJETO CURSOR
             query = '''
-                    INSERT INTO carrito(cod_carrito, prod_nom, subtotal, clie_email)
-                    VALUES ('{}', '{}', '{}', '{}')
-                    '''.format(self.__cod_carrito, self.__prod_nom,
+                    INSERT INTO carrito(prod_nom, subtotal, clie_email)
+                    VALUES ( '{}', '{}', '{}')
+                    '''.format(self.__prod_nom,
                                self.__subtotal, self.__clie_email)
             resultado = cursor.execute(query)
             database.commit()  # CONFIRMAR CAMBIOS QUERY
@@ -61,20 +61,25 @@ class Carrito():
             database.close()  # CERRAR CONEXION CON BASE DE DATOS
 
         return estado_op
-    def obtener_carrito(self,email):
+
+    @classmethod     
+    def obtener_carrito(cls,email):
+        carrito=None
         try:
             database = sqlite3.connect("data/liniotrabfinal.db")  # ABRIR CONEXION CON BASE DE DATOS
             cursor = database.cursor()  # OBTENER OBJETO CURSOR
             query = '''
-            SELECT * FROM carrito where clie_email like {}
+            SELECT * FROM carrito where clie_email like '{}'
             '''.format(email)
             cursor.execute(query)
             carrito = cursor.fetchone()
         except Exception as e:
             print("Error: {}".format(e))
         finally:
-            database.close()  # CERRAR CONEXION CON BASE DE DATOS
-        return carrito
+            database.close()
+            
+        result = cls(carrito[0], carrito[1], carrito[2], carrito[3])  # CERRAR CONEXION CON BASE DE DATOS
+        return result
 
     def actualizar_carrito(self)-> bool:
         estado_op = False
@@ -84,10 +89,10 @@ class Carrito():
             cursor = database.cursor()
             query = '''
             UPDATE carrito
-            SET cod_carrito = '{}', prod_nom = '{}', subtotal = '{}', clie_email = '{}'
+            SET  prod_nom = '{}', subtotal = '{}'
             WHERE clie_email = '{}'
-            '''.format(self.__cod_carrito, self.__prod_nom, self.__subtotal,
-                       self.clie_email)
+            '''.format( self.__prod_nom, self.__subtotal,
+                       self.__clie_email)
             cursor.execute(query)
             database.commit()
             estado_op = True
